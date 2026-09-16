@@ -37,7 +37,8 @@ package lab2
   end g;
 
   model MechSystem "x'' = u"
-    parameter Real x0[2] = {5, 2}; 
+    parameter Real x0[2] = {5, 2};
+    parameter Real umax = 1;
 
     input Real u[1];
     output Real x[2](start = x0, each fixed = true);
@@ -61,7 +62,6 @@ package lab2
     
     above = sigma > 0;
     below = sigma < 0;
-    
     when x*x <= eps^2 then
       atM = true;
     end when;
@@ -70,6 +70,6 @@ package lab2
 
   model Problem2
     MechSystem ms(u = r.u);
-    Regulator r(x = ms.x);
+    Regulator r(x = ms.x, umax = ms.umax);
   end Problem2;
 end lab2;
